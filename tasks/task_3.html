@@ -1,0 +1,26 @@
+<!-- Напишите код, как при помощи javascript получить: 
+      элемент <div>? 
+      <ul>? 
+      второй <li> (с именем Пит)? -->
+
+<html>
+  <h1>Необходимо открыть консоль</h1>
+  <body>
+    <div id="user">Пользователи:</div>
+    <ul>
+    <li>Джон</li>
+    <li>Пит</li>
+    </ul>
+  </body>
+
+  <script>
+    const div = document.querySelector("div")
+    console.log(div)
+
+    const ul = document.querySelector('ul')
+    console.log(ul)
+
+    const secondLi = document.querySelectorAll('li')[1]
+    console.log(secondLi)
+  </script>
+</html>

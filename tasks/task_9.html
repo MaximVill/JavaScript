@@ -1,0 +1,105 @@
+<!-- а. Используя методы DOM API, написать код для создания точно такой же разметки как в файле (всё, что внутри body) поэлементно, через метод createElement.
+
+b. Верните всю разметку макета обратно в HTML, кроме разметки карточки (div.card и весь внутренний набор разметки). Напишите скрипт, который будет через каждый 2000 мс создавать и добавлять новую карточку, пока их не станет 6 штук. Используйте встроенную функцию setInterval. После создания 6 карточек цикл с таймером нужно деактивировать. Причём, при каждом новом добавлении картинки img, к ссылке в неё нужно добавлять уникальный параметр - это может быть счётчик, или просто рандомное число. Чтобы ссылки на картинки выглядели следующим образом:
+  https://thispersondoesnotexist.com/?1
+  https://thispersondoesnotexist.com/?2
+  https://thispersondoesnotexist.com/?3
+  и т.д.
+
+с. Разработайте функцию для генерации случайных имён. Для этого вам нужно иметь массив имён и массив фамилий, из которых функция будет формировать случайное имя. Используйте эту функцию, чтобы помещать случайное имя на текст для каждой карточки. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="\style.css">
+    <title>Лицемер (с)</title>
+</head>
+<body>
+    <script>
+      const firstNames = ['Александр', 'Мария', 'Дмитрий', 'Анна', 'Сергей', 'Елена', 'Андрей', 'Ольга', 'Михаил', 'Наталья']
+      const lastNames = ['Иванов', 'Петров', 'Сидоров', 'Смирнов', 'Кузнецов', 'Попов', 'Васильев', 'Михайлов', 'Новиков', 'Фёдоров']
+
+      // Функция генерации случайного имени
+      function getRandomName() {
+        const firstName = firstNames[Math.floor(Math.random() * firstNames.length)]
+        const lastName = lastNames[Math.floor(Math.random() * lastNames.length)]
+        return `${firstName} ${lastName}`
+      }
+
+      // Функция создания карточки
+      function createCard(counter) {
+        const card = document.createElement('div')
+        card.className = 'card'
+
+        const img = document.createElement('img')
+        img.src = `https://thispersondoesnotexist.com/?${counter}`
+        img.alt = 'Avatar'
+
+        const description = document.createElement('div')
+        description.className = 'description'
+
+        const p = document.createElement('p')
+        p.textContent = getRandomName()
+
+        description.appendChild(p)
+        card.appendChild(img)
+        card.appendChild(description)
+
+        return card
+      }
+
+      // Функция создания всей разметки
+      function createMarkup() {
+        const header = document.createElement('header')
+
+        const main = document.createElement('main')
+        main.className = 'content'
+
+        const aside = document.createElement('aside')
+
+        const section = document.createElement('section')
+
+        const headerD = document.createElement('div')
+        headerD.className = 'header-d'
+        headerD.textContent = 'Выберите лицо, которое нравится вам больше остальных:'
+
+        const display = document.createElement('div')
+        display.className = 'display'
+
+        section.appendChild(headerD)
+        section.appendChild(display)
+        main.appendChild(aside)
+        main.appendChild(section)
+
+        document.body.appendChild(header)
+        document.body.appendChild(main)
+
+        return display
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const display = createMarkup()
+        let counter = 1
+        let cardCount = 0
+
+        const interval = setInterval(() => {
+          if (cardCount >= 6) {
+            clearInterval(interval)
+            return
+          }
+
+          const card = createCard(counter)
+          display.appendChild(card)
+          counter++
+          cardCount++
+        }, 2000)
+      })
+    </script>
+</body>
+</html>

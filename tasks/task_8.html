@@ -1,0 +1,20 @@
+<!-- (2 балла) Напишите интерфейс для создания списка. Запросите у пользователя количество пунктов с помощью prompt.
+Для каждого пункта:
+· Запрашивайте содержимое пункта у пользователя с помощью prompt.
+· Создавайте элемент <li> и добавляйте его к <ul>.
+
+Все элементы должны создаваться динамически. -->
+
+<ul id="list"></ul>
+<script>
+  const count = parseInt(prompt('Введите количество пунктов списка:'))
+  const list = document.getElementById('list')
+
+  for (let i = 0; i < count; i++) {
+    const text = prompt(`Введите содержимое пункта ${i + 1}:`)
+    const li = document.createElement('li')
+
+    li.textContent = text
+    list.appendChild(li)
+  }
+</script>
