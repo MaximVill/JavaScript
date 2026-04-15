@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Фамилия Имя - Регистрация</title>
+		<link rel="stylesheet" href="loader.css" />
+	</head>
+	<body>
+		<section id="loaderSection" class="loader-section">
+			<p class="loader-text">Загрузка...</p>
+			<div class="loader-bar-container">
+				<div class="loader-bar" id="loaderBar"></div>
+			</div>
+		</section>
+		<script src="loader.js"></script>
+
+		<div id="mainContent" class="main-content">
+			<div id="startScreen" class="start-screen">
+				<button onclick="showFrame('frame1')">Регистрация</button>
+			</div>
+
+			<section id="frame1" class="frame">
+				<div class="progress-indicator">
+					<div class="progress-fill" style="width: 0%"></div>
+				</div>
+				<h3>Персональные данные</h3>
+				<p>
+					<label>Имя:</label
+					><input type="text" id="f1_name" oninput="checkStep1()" />
+				</p>
+				<p>
+					<label>Email:</label
+					><input type="email" id="f1_email" oninput="checkStep1()" />
+				</p>
+				<p>
+					<label>Пароль:</label
+					><input type="password" id="f1_pass" oninput="checkStep1()" />
+				</p>
+				<p>
+					<label>Повтор пароля:</label
+					><input type="password" id="f1_pass2" oninput="checkStep1()" />
+				</p>
+				<p>
+					<label>Страна:</label
+					><select id="f1_country" onchange="checkStep1()"></select>
+				</p>
+				<div class="button-row">
+					<button onclick="showFrame('startScreen')">Отмена</button>
+					<button id="btn_next1" disabled onclick="showFrame('frame2')">
+						Далее
+					</button>
+				</div>
+			</section>
+
+			<section id="frame2" class="frame">
+				<div class="progress-indicator">
+					<div class="progress-fill" style="width: 33%"></div>
+				</div>
+				<h3>Подтверждение телефона</h3>
+				<p>
+					<label>Телефон:</label
+					><input type="text" id="f2_phone" placeholder="+7..." />
+				</p>
+				<button onclick="sendPhone()">Отправить</button>
+				<div id="phoneCodeBlock" class="phone-extra">
+					<p>
+						<label>Код:</label><input type="text" id="f2_code" maxlength="4" />
+					</p>
+					<button onclick="verifyCode()">Проверить</button>
+				</div>
+				<div class="button-row">
+					<button onclick="showFrame('frame1')">Назад</button>
+					<button id="btn_next2" disabled onclick="showFrame('frame3')">
+						Далее
+					</button>
+				</div>
+			</section>
+
+			<section id="frame3" class="frame">
+				<div class="progress-indicator">
+					<div class="progress-fill" style="width: 66%"></div>
+				</div>
+				<h3>Метод оплаты</h3>
+				<p>
+					<label>Номер карты:</label>
+					<span class="card-group">
+						<input type="text" id="card1" maxlength="4" oninput="cardNext(1)" />
+						<input type="text" id="card2" maxlength="4" oninput="cardNext(2)" />
+						<input type="text" id="card3" maxlength="4" oninput="cardNext(3)" />
+						<input type="text" id="card4" maxlength="4" />
+					</span>
+				</p>
+				<p>
+					<label>Срок:</label
+					><input type="text" id="card_exp" placeholder="MM/YY" />
+				</p>
+				<p>
+					<label>CVV:</label
+					><input type="password" id="card_cvv" maxlength="3" />
+				</p>
+				<div class="button-row">
+					<button onclick="showFrame('frame2')">Назад</button>
+					<button onclick="showFrame('frame4')">Завершить</button>
+				</div>
+			</section>
+
+			<section id="frame4" class="frame">
+				<div class="progress-indicator">
+					<div class="progress-fill" style="width: 100%"></div>
+				</div>
+				<h3>Регистрация завершена!</h3>
+				<p class="success-message">Вы успешно зарегистрированы.</p>
+				<img
+					src="../images/image5.png"
+					alt="success"
+					style="max-width: 200px"
+				/>
+				<div class="button-row">
+					<button onclick="location.reload()">Начать заново</button>
+				</div>
+			</section>
+		</div>
+
+		<script>
+			function showFrame(id) {
+				var frames = document.querySelectorAll('.frame, .start-screen')
+				for (var i = 0; i < frames.length; i++) {
+					frames[i].style.display = 'none'
+				}
+				document.getElementById(id).style.display = 'block'
+				if (id === 'frame1') fillCountries()
+			}
+
+			function checkStep1() {
+				var n = document.getElementById('f1_name').value
+				var e = document.getElementById('f1_email').value
+				var p = document.getElementById('f1_pass').value
+				var p2 = document.getElementById('f1_pass2').value
+				var c = document.getElementById('f1_country').value
+				document.getElementById('btn_next1').disabled = !(
+					n &&
+					e &&
+					p &&
+					p === p2 &&
+					c
+				)
+			}
+
+			var countries = [
+				'Россия',
+				'США',
+				'Германия',
+				'Франция',
+				'Китай',
+				'Япония',
+				'Италия',
+				'Испания',
+				'Канада',
+				'Австралия',
+				'Бразилия',
+				'Индия',
+				'Мексика',
+				'Великобритания',
+				'Турция',
+				'Египет',
+				'Южная Корея',
+				'Аргентина',
+				'Польша',
+				'Нидерланды',
+			]
+			var countriesFilled = false
+			function fillCountries() {
+				if (countriesFilled) return
+				var sel = document.getElementById('f1_country')
+				sel.innerHTML = '<option value="">-- выберите --</option>'
+				for (var i = 0; i < countries.length; i++) {
+					sel.innerHTML +=
+						'<option value="' + countries[i] + '">' + countries[i] + '</option>'
+				}
+				countriesFilled = true
+			}
+
+			function sendPhone() {
+				document.getElementById('phoneCodeBlock').style.display = 'block'
+			}
+
+			function verifyCode() {
+				var code = document.getElementById('f2_code').value
+				if (code.length === 4) {
+					document.getElementById('btn_next2').disabled = false
+				}
+			}
+
+			function cardNext(n) {
+				var val = document.getElementById('card' + n).value
+				if (val.length === 4 && n < 4) {
+					document.getElementById('card' + (n + 1)).focus()
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,119 @@
+.loader-section {
+	text-align: center;
+	margin-top: 50px;
+}
+
+.loader-text {
+	margin-bottom: 10px;
+	font-size: 14px;
+}
+
+.loader-bar-container {
+	width: 365px;
+	height: 20px;
+	border: 2px solid #000;
+	background-color: #fff;
+	margin: 0 auto;
+}
+
+.loader-bar {
+	width: 0;
+	height: 100%;
+	background-color: teal;
+}
+
+.main-content {
+	display: none;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.frame {
+	display: none;
+	width: 500px;
+	margin: 0 auto;
+	border: 1px solid #ccc;
+	padding: 20px;
+	background-color: #f9f9f9;
+}
+
+.frame.active {
+	display: block;
+}
+
+.frame h3 {
+	margin-top: 0;
+}
+
+.frame label {
+	display: inline-block;
+	width: 120px;
+	text-align: right;
+	margin-right: 10px;
+	vertical-align: middle;
+}
+
+.frame input[type="text"],
+.frame input[type="password"],
+.frame input[type="email"],
+.frame select {
+	width: 200px;
+	margin: 5px 0;
+}
+
+.frame .button-row {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.frame button {
+	margin: 0 5px;
+	padding: 5px 15px;
+}
+
+.frame button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.phone-extra {
+	display: none;
+	margin-top: 15px;
+}
+
+.progress-indicator {
+	width: 300px;
+	height: 10px;
+	border: 1px solid #000;
+	margin: 10px auto 20px;
+	background-color: #fff;
+}
+
+.progress-fill {
+	height: 100%;
+	background-color: teal;
+	width: 0;
+	transition: width 0.3s;
+}
+
+.card-group input {
+	width: 60px;
+	text-align: center;
+	margin: 0 3px;
+}
+
+.success-message {
+	font-size: 18px;
+	color: green;
+	margin: 20px 0;
+}
+
+.start-screen {
+	text-align: center;
+	margin-top: 50px;
+}
+
+.start-screen button {
+	padding: 10px 30px;
+	font-size: 16px;
+}

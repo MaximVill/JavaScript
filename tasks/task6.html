@@ -1,0 +1,27 @@
+<h3>Введите начисленную зарплату за следующие месяцы</h3>
+
+<br/>
+
+Январь: <input type="text" id="m1" value="300"/><br/><br/>
+Февраль: <input type="text" id="m2" value="200"/><br/><br/>
+Март: <input type="text" id="m3" value="500"/><br/><br/>
+Апрель: <input type="text" id="m4" value="250"/><br/><br />
+Май: <input type="text" id="m5" value="350"/><br/><br/>
+Июнь: <input type="text" id="m6" value="500"/><br/><br/>
+
+<br/>
+
+Средняя зарплата: <input type="text" id="result"/><br/><br/>
+<button onclick="calculate()">Вычислить</button>
+<button onclick="location.reload()">Обновить</button>
+
+<script>
+	function calculate() {
+		var sum = 0
+		for (var i = 1; i <= 6; i++) {
+			sum += parseFloat(document.getElementById('m' + i).value)
+		}
+		document.getElementById('result').value = sum / 6
+	}
+</script>
+

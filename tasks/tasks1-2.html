@@ -1,0 +1,21 @@
+<h2>Задание 1</h2>
+<div id="text">
+	<span>Элемент</span>
+	<button class="delete-btn">Удалить</button>
+</div>
+<script>
+	document.querySelectorAll('.delete-btn').forEach((button) => {
+		button.addEventListener('click', function () {
+			document.getElementById('text').remove()
+		})
+	})
+</script>
+
+
+<h2>Задание 2</h2>
+<button id="myButton" onclick="hideButton()">Нажми, чтобы исчезнуть</button>
+<script>
+  function hideButton() {
+    document.getElementById('myButton').style.display = 'none';
+  }
+</script>
