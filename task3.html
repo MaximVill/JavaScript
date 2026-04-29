@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лаб. 8 — Задание 2</title>
+  <link rel="stylesheet" href="css/task3.css">
+</head>
+<body>
+
+<header>
+  <h1>XHR Requests — Лабораторная работа 8, Задание 2</h1>
+  <p>Последовательные запросы: Raw XHR → Callback → Promise → Async/Await</p>
+</header>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('raw')">1. Raw XHR</button>
+  <button class="tab" onclick="switchTab('cb')">2. Callback</button>
+  <button class="tab" onclick="switchTab('promise')">3. Promise</button>
+  <button class="tab" onclick="switchTab('async')">4. Async/Await</button>
+</div>
+
+<!-- 1. Raw XHR -->
+<div id="panel-raw" class="panel active">
+  <div class="code-block">
+    <span class="cm">// Прямые XHR-запросы с цепочкой через onload</span><br>
+    <span class="kw">const</span> <span class="var">xhr</span> = <span class="kw">new</span> <span class="fn">XMLHttpRequest</span>();<br>
+    <span class="var">xhr</span>.<span class="fn">open</span>(<span class="str">'GET'</span>, url);<br>
+    <span class="var">xhr</span>.onload = () => { <span class="cm">/* следующий запрос */</span> <span class="fn">next</span>(); };<br>
+    <span class="var">xhr</span>.<span class="fn">send</span>();
+  </div>
+  <button class="btn" id="btn-raw" onclick="runRaw()">Запустить</button>
+  <div class="output">
+    <div class="output-header">// output</div>
+    <div class="output-body" id="out-raw"><span class="log-wait">// нажмите «Запустить»</span></div>
+  </div>
+</div>
+
+<!-- 2. Callback -->
+<div id="panel-cb" class="panel">
+  <div class="code-block">
+    <span class="kw">function</span> <span class="fn">request</span>(<span class="var">url</span>, <span class="var">callback</span>) {<br>
+    &nbsp;&nbsp;<span class="kw">const</span> <span class="var">xhr</span> = <span class="kw">new</span> <span class="fn">XMLHttpRequest</span>();<br>
+    &nbsp;&nbsp;<span class="var">xhr</span>.<span class="fn">open</span>(<span class="str">'GET'</span>, <span class="var">url</span>);<br>
+    &nbsp;&nbsp;<span class="var">xhr</span>.onload = () => <span class="fn">callback</span>(<span class="kw">null</span>, JSON.<span class="fn">parse</span>(<span class="var">xhr</span>.responseText));<br>
+    &nbsp;&nbsp;<span class="var">xhr</span>.onerror = () => <span class="fn">callback</span>(<span class="kw">new</span> <span class="fn">Error</span>(<span class="str">'network error'</span>));<br>
+    &nbsp;&nbsp;<span class="var">xhr</span>.<span class="fn">send</span>();<br>
+    }
+  </div>
+  <button class="btn" id="btn-cb" onclick="runCallback()">Запустить</button>
+  <div class="output">
+    <div class="output-header">// output</div>
+    <div class="output-body" id="out-cb"><span class="log-wait">// нажмите «Запустить»</span></div>
+  </div>
+</div>
+
+<!-- 3. Promise -->
+<div id="panel-promise" class="panel">
+  <div class="code-block">
+    <span class="kw">function</span> <span class="fn">requestPromise</span>(<span class="var">url</span>) {<br>
+    &nbsp;&nbsp;<span class="kw">return new</span> <span class="fn">Promise</span>((<span class="var">resolve</span>, <span class="var">reject</span>) => {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">request</span>(<span class="var">url</span>, (<span class="var">err</span>, <span class="var">data</span>) => <span class="var">err</span> ? <span class="fn">reject</span>(<span class="var">err</span>) : <span class="fn">resolve</span>(<span class="var">data</span>));<br>
+    &nbsp;&nbsp;});<br>
+    }<br><br>
+    <span class="cm">// Цепочка через .then()</span><br>
+    <span class="fn">requestPromise</span>(url1).<span class="fn">then</span>(() => <span class="fn">requestPromise</span>(url2)).<span class="fn">then</span>(...)
+  </div>
+  <button class="btn" id="btn-promise" onclick="runPromise()">Запустить</button>
+  <div class="output">
+    <div class="output-header">// output</div>
+    <div class="output-body" id="out-promise"><span class="log-wait">// нажмите «Запустить»</span></div>
+  </div>
+</div>
+
+<!-- 4. Async/Await -->
+<div id="panel-async" class="panel">
+  <div class="code-block">
+    <span class="kw">async function</span> <span class="fn">runAll</span>() {<br>
+    &nbsp;&nbsp;<span class="kw">const</span> <span class="var">post</span>   = <span class="kw">await</span> <span class="fn">requestPromise</span>(urlPost);<br>
+    &nbsp;&nbsp;<span class="kw">const</span> <span class="var">user</span>   = <span class="kw">await</span> <span class="fn">requestPromise</span>(urlUser);<br>
+    &nbsp;&nbsp;<span class="kw">const</span> <span class="var">trivia</span> = <span class="kw">await</span> <span class="fn">requestPromise</span>(urlTrivia);<br>
+    &nbsp;&nbsp;<span class="kw">const</span> <span class="var">cat</span>    = <span class="kw">await</span> <span class="fn">requestPromise</span>(urlCat);<br>
+    &nbsp;&nbsp;<span class="kw">const</span> <span class="var">dog</span>    = <span class="kw">await</span> <span class="fn">requestPromise</span>(urlDog);<br>
+    }
+  </div>
+  <button class="btn" id="btn-async" onclick="runAsync()">Запустить</button>
+  <div class="output">
+    <div class="output-header">// output</div>
+    <div class="output-body" id="out-async"><span class="log-wait">// нажмите «Запустить»</span></div>
+  </div>
+</div>
+
+<script src="js/task3.js"></script>
+</body>
+</html>
